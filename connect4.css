@@ -1,0 +1,121 @@
+/* game board table */
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: lightcyan;
+	border: solid 1px palevioletred;
+	background-clip: content-box;
+	box-shadow: inset 0 0 0 20px rgb(26, 29, 32);
+}
+h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -65%;
+	font-size: 7vw;
+	text-shadow: 4px 4px 0px palevioletred;
+}
+
+div {
+	background-color: rgb(26, 29, 32);
+}
+#board td {
+	width: 50px;
+	height: 50px;
+	border: solid 1px palevioletred;
+}
+
+/* pieces are div within game table cells: draw as colored circles */
+.piece {
+	/* TODO: make into circles */
+	margin: 5px;
+	width: 80%;
+	height: 80%;
+	border-radius: 50%;
+}
+
+/* TODO: make pieces red/blue,  depending on player 1/2 piece */
+
+/* column-top is table row of clickable areas for each column */
+
+#column-top td {
+	border: dashed 1px lightgray;
+}
+
+#column-top td:hover {
+	background-color: yellow;
+	opacity: 0.8;
+	border: 1px solid palevioletred;
+	border-radius: 50%;
+}
+
+div#current {
+	color: MediumPurple;
+	position: absolute;
+	top: 0px;
+	justify-content: center;
+	align-items: center;
+}
+
+.shape {
+	position: absolute;
+	left: 0;
+	width: 80px;
+	height: 80px;
+	display: block;
+	top: 101%;
+	border-radius: 50%;
+
+	transition: all 1s ease-in-out;
+	animation: ani 4s infinite;
+}
+
+@keyframes ani {
+	0% {
+		left: -150px;
+	}
+	50% {
+		left: 515px;
+	}
+	100% {
+		left: -150px;
+	}
+	0% {
+		background-color: MediumPurple;
+	}
+	50% {
+		background-color: limegreen;
+	}
+	100% {
+		background-color: MediumPurple;
+	}
+}
+
+.p1 {
+	position: absolute;
+	left: -35%;
+	top: 80%;
+	font-size: 2vw;
+	text-shadow: 2px 2px 0px MediumPurple;
+	background-color: lightcyan;
+}
+
+.p2 {
+	position: absolute;
+	right: -35%;
+	top: 80%;
+	font-size: 2vw;
+	text-shadow: 2px 2px 0px limegreen;
+	background-color: lightcyan;
+}
