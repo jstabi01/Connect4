@@ -94,79 +94,107 @@ function handleClick(evt) {
 }
 
 function check_win(y, x) {
-	if (x + 3 <= 6 && y >= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (board[y][x + i] == currPlayer) {
-				counter++;
+	const _win = {
+		northwest: (y, x) => {
+			let matches = 0;
+			y--;
+			x--;
+			while (testMatch(y, x)) {
+				y--;
+				x--;
+				matches++;
 			}
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y + 3 <= 5 && x >= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y + i][x]) {
-				counter++;
-			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y - 3 >= 0 && x + 3 <= 6) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y - i][x + i]) {
-				counter++;
+		west: (y, x) => {
+			let matches = 0;
+			x--;
+			while (testMatch(y, x)) {
+				x--;
+				matches++;
 			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y - 3 >= 0 && x >= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y - i][x]) {
-				counter++;
+		southwest: (y, x) => {
+			let matches = 0;
+			y++;
+			x--;
+			while (testMatch(y, x)) {
+				y++;
+				x--;
+				matches++;
 			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y + 3 <= 5 && x - 3 >= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y + i][x - i]) {
-				counter++;
+		south: (y, x) => {
+			let matches = 0;
+			y++;
+			while (testMatch(y, x)) {
+				y++;
+				matches++;
 			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y + 3 <= 5 && x + 3 <= 6) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y + i][x + i]) {
-				counter++;
+		southeast: (y, x) => {
+			let matches = 0;
+			y++;
+			x++;
+			while (testMatch(y, x)) {
+				y++;
+				x++;
+				matches++;
 			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (x - 3 <= 0 && y >= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y][x - i]) {
-				counter++;
+		east: (y, x) => {
+			let matches = 0;
+			x++;
+			while (testMatch(y, x)) {
+				x++;
+				matches++;
 			}
+			return matches;
+		},
 
-			if (counter == 4) return endGame();
-		}
-	}
-	if (y - 3 >= 0 && x - 3 <= 0) {
-		for (i = 0, counter = 0; i <= 3; i++) {
-			if (currPlayer == board[y - i][x - i]) {
-				counter++;
+		northeast: (y, x) => {
+			let matches = 0;
+			y--;
+			x++;
+			while (testMatch(y, x)) {
+				y--;
+				x++;
+				matches++;
 			}
-
-			if (counter == 4) return endGame();
+			return matches;
 		}
+	};
+
+	const testMatch = (y, x) => {
+		if (y >= 0 && y < HEIGHT && x >= 0 && x < WIDTH && board[y][x] === currPlayer) {
+			return true;
+		}
+		return false;
+	};
+
+	let horizontalMatches = _win.west(y, x) + _win.east(y, x);
+	let verticalMatches = _win.south(y, x);
+	let rightDiagnolMatches = _win.southwest(y, x) + _win.northeast(y, x);
+	let leftDiagnolMatches = _win.northwest(y, x) + _win.southeast(y, x);
+
+	if (
+		horizontalMatches >= 3 ||
+		verticalMatches >= 3 ||
+		rightDiagnolMatches >= 3 ||
+		leftDiagnolMatches >= 3
+	) {
+		return endGame();
 	}
-	return 0;
 }
 
 function fillBoard() {
